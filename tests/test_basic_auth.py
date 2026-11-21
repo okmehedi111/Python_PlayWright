@@ -12,7 +12,7 @@ class TestBasicAuth:
     def test_basic_auth(self, page: Page):
         # set httpCredentials on a new context 
 
-        auth_page.goto(TEST_APP_URL)
-        auth_page.get_by_role("link", name="Basic Auth").click()
+        page.goto(TEST_APP_URL)
+        page.get_by_role("link", name="Basic Auth").click()
 
         # verify that SUCCESS_AUTH_MSG is displayed
