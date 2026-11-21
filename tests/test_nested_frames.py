@@ -19,9 +19,14 @@ class TestNestedFrames:
         top_frame = page.frame_locator('frame[name="frame-top"]')
 
         # access the Left nested frame
+        left_frame = top_frame.frame_locator('frame[name="frame-left"]')
 
         # expect that left frame text is correct
+        expect(left_frame.locator("body")).to_have_text(LEFT_FRAME_TEXT)
 
         # access the Right nested frame
+        right_frame = top_frame.frame_locator('frame[name="frame-right"]')
 
         # expect that right frame text is correct
+        expect(right_frame.locator("body")).to_have_text(RIGHT_FRAME_TEXT)
+
