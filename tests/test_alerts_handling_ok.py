@@ -15,5 +15,9 @@ class TestAlertsHandling:
         page.get_by_role("link", name="JavaScript Alerts").click()
 
         # accept alert
+        page.on("dialog", lambda dialog: dialog.accept())
+        page.get_by_role("button", name="Click for JS Alert").click()
   
         # expect that successfulMessage is displayed
+        expect(page.locator("#result")).to_have_text(SUCCESS_ALERT_MSG)
+
