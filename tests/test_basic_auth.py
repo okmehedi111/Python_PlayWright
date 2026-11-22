@@ -10,9 +10,17 @@ SUCCESS_AUTH_MSG = "Congratulations! You must have the proper credentials."
 class TestBasicAuth:
 
     def test_basic_auth(self, page: Page):
-        # set httpCredentials on a new context 
 
-        page.goto(TEST_APP_URL)
-        page.get_by_role("link", name="Basic Auth").click()
+        # set httpCredentials on a new context
+        context = page.context.browser.new_context(
+            http_credentials= {"username": "admin", "password": "admin"}
+        )
+        auth_page = context.new_page()
+
+        auth_page.goto(TEST_APP_URL)
+        auth_page.get_by_role("link", name="Basic Auth").click()
 
         # verify that SUCCESS_AUTH_MSG is displayed
+        expect(auth_page.locator(".example p")).to_have_text(SUCCESS_AUTH_MSG)
+
+

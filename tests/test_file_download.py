@@ -7,7 +7,7 @@ from playwright.sync_api import Page
 from configs.settings import TEST_APP_URL
 
 DOWNLOAD_DIR = "./downloads"
-TEST_FILE = "some-file.txt"
+TEST_FILE = "textfile.txt"
 
 
 @pytest.mark.file_download
@@ -26,7 +26,13 @@ class TestFileDownload:
         downloaded_file_path = os.path.join(DOWNLOAD_DIR, TEST_FILE)
 
         # wait until the file is fully downloaded along the specific downloaded_file_path
-        
+        with page.expect_download() as download_info:
+            file_link.click()
+        download = download_info.value
+        download.save_as(downloaded_file_path)
+
         # assert that file downloaded
+        assert os.path.exists(downloaded_file_path), f'{downloaded_file_path} does not exist'
 
         # cleanup: delete the DOWNLOAD_DIR folder along with all its contents
+        shutil.rmtree(DOWNLOAD_DIR)
