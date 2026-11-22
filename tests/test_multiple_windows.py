@@ -17,5 +17,10 @@ class TestMultipleWindows:
         click_here_link = page.get_by_role("link", name="Click Here")
 
         # click 'Click Here' link and wait until new window opened
-        
+        with page.context.expect_page() as new_page_info:
+            click_here_link.click()
+        new_window = new_page_info.value
+
         # expect that new window text is displayed
+        new_window.wait_for_load_state()
+        expect(new_window.locator(".example h3")).to_have_text(NEW_WINDOW_TEXT)
