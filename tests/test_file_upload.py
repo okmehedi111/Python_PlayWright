@@ -18,5 +18,8 @@ class TestFileUpload:
         page.get_by_role("link", name="File Upload").click()
 
         # upload file with TEST_FILE_PATH path
+        page.locator("#file-upload").set_input_files(str(TEST_FILE_PATH))
+        page.locator("#file-submit").click()
 
         # expect that TEST_FILE on Upload page is correct
+        expect(page.locator("#uploaded-files")).to_have_text(TEST_FILE)
