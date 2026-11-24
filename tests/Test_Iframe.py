@@ -1,22 +1,18 @@
 import pytest
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from configs.settings import TEST_APP_URL
+INPUT_TEXT = "test"
 
-def test_iframe(page: Page):
-    page.goto(TEST_APP_URL)
+class TestExersise:
+    def iframe(self, page: Page):
+        page.goto(TEST_APP_URL)
+        page.get_by_role("link", name="Frames").click()
+        page.get_by_role("link", name="iFrame").click()
 
-    page.get_by_text("Frames", exact= True).click()
-    page.get_by_text("iFrame", exact= True).click()
-
-    iframe = page.frame_locator("#mce_0_ifr")
-
-    iframe.locator("body").fill("Learning Playwright with python")
-    text = iframe.locator("body").inner_text()
-
-    print("body text:",text)
-
-    assert text == "Learning Playwright with python"
-
+        iframe = page.locator("#mce_0_ifr")
+        iframe.locator("body").fill(INPUT_TEXT)
+        text = iframe.locator("body").inner_text()
+        assert INPUT_TEXT == text
 
 
 
