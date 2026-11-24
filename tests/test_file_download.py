@@ -9,7 +9,6 @@ from configs.settings import TEST_APP_URL
 DOWNLOAD_DIR = "./downloads"
 TEST_FILE = "textfile.txt"
 
-
 @pytest.mark.file_download
 class TestFileDownload:
 
